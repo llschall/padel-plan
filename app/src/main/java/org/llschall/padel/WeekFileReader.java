@@ -18,7 +18,7 @@ public class WeekFileReader {
         Path path = Paths.get("files/in");
 
         // List all files in the directory
-        Stream<Path> paths = Files.list(path);
+        Stream<Path> paths = Files.list(path).sorted();
 
         paths.forEach((p) -> {
             // Read each week from the file and add it to the list
@@ -31,7 +31,7 @@ public class WeekFileReader {
 
     Week readWeek(Path path) {
         // Create a new Week object
-        Week week = new Week();
+        Week week = new Week(path.getFileName().toString());
 
         // Here you would read the file and populate the week object
         // For now, we will just return an empty week

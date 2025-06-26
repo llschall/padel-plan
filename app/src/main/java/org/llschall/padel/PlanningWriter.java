@@ -31,8 +31,17 @@ public class PlanningWriter {
         html.append("<h1>Planning</h1>\n");
 
         html.append("<table border=1>\n");
-        html.append("<tr>");
 
+        html.append("<tr>");
+        for (Week week : weeks) {
+            html.append("<th>");
+            html.append(week.name);
+            html.append("</th>\n");
+        }
+
+        html.append("</tr>\n");
+
+        html.append("<tr>");
         for (Week week : weeks) {
             html.append("<td><ul>");
 
