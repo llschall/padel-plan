@@ -11,6 +11,6 @@ public class Week {
         this.name = name;
     }
 
-    final List<Player> players= new ArrayList<>();
+    final List<Slot> slots= new ArrayList<>();
 
 }

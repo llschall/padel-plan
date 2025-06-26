@@ -44,11 +44,18 @@ public class PlanningWriter {
         for (Week week : weeks) {
             html.append("<td><ul>");
 
-            week.players.forEach(player -> {
-                html.append("<li>");
-                html.append(player.name);
+            for (Slot slot : week.slots) {
+                html.append("<li");
+                if (slot.isSubstitute)
+                    html.append(" class=\"substitute\"");
+                html.append(">");
+                if (slot.isSubstitute)
+                    html.append("(");
+                html.append(slot.player.name);
+                if (slot.isSubstitute)
+                    html.append(")");
                 html.append("</li>");
-            });
+            }
             html.append("</ul></td>\n");
         }
 

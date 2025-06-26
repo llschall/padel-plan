@@ -44,8 +44,11 @@ public class WeekFileReader {
         } catch (IOException e) {
             throw new PadelPlanException(e);
         }
-        for (String line : lines) {
-            week.players.add(new Player(line));
+
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            Player player = new Player(line);
+            week.slots.add(new Slot(player ,i >3));
         }
 
         return week;

@@ -17,3 +17,7 @@ td {
     color: #333;               /* Cell text color */
     border: 1px solid #ccc;
 }
+
+.substitute {
+    color: red;
+}
