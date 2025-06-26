@@ -1,0 +1,19 @@
+table {
+    width: 120px;
+    border-collapse: collapse;
+    background-color: #f5f5fa; /* Table background */
+}
+
+th {
+    background-color: #4a90e2; /* Header background */
+    color: #fff;               /* Header text color */
+    padding: 8px;
+}
+
+td {
+    vertical-align: top;
+    text-align: left;
+    background-color: #e9effa; /* Cell background */
+    color: #333;               /* Cell text color */
+    border: 1px solid #ccc;
+}

@@ -22,7 +22,11 @@ public class PlanningWriter {
         StringBuilder html = new StringBuilder();
 
         html.append("<html>\n");
-        html.append("<head><title>Planning</title></head>\n");
+        html.append("<head>\n");
+        html.append("<title>Planning</title>\n");
+        html.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"planning.css\">");
+        html.append("</head>\n");
+
         html.append("<body>\n");
         html.append("<h1>Planning</h1>\n");
 
