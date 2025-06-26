@@ -41,7 +41,7 @@ public class OptimizerTest {
         List<Week> optimized = optimizer.optimize(List.of(week1, week2));
 
         Assertions.assertEquals("ABCDEF",dumpWeek(optimized.get(0)));
-        Assertions.assertEquals("BDEFG",dumpWeek(optimized.get(1)));
+        Assertions.assertEquals("EFBDG",dumpWeek(optimized.get(1)));
     }
 
     String dumpWeek(Week week) {
