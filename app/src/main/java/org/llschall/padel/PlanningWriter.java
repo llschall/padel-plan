@@ -30,12 +30,12 @@ public class PlanningWriter {
         html.append("<body>\n");
         html.append("<h1>Planning</h1>\n");
 
-        html.append("<table border=1>\n");
+        html.append("<table>\n");
 
         html.append("<tr>");
         for (Week week : weeks) {
             html.append("<th>");
-            html.append(week.name);
+            html.append(new Beautifier().beautifyWeekName(week.name));
             html.append("</th>\n");
         }
 
