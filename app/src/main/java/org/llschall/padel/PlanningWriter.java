@@ -1,6 +1,7 @@
 package org.llschall.padel;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,23 +12,36 @@ public class PlanningWriter {
     void write(List<Week> weeks) throws IOException {
         System.out.println("Writing the planning...");
 
-        Path path = Paths.get("files/out/planning.html");
+        StringWriter writer = new StringWriter();
+        writer.append("<html>\n");
+        writer.append("<head>\n");
+        writer.append("<title>Planning</title>\n");
+        writer.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"planning.css\">");
+        writer.append("</head>\n");
+        writer.append("<body>\n");
+
         String html = createHtml(weeks);
 
-        Files.write(path, html.getBytes());
+        Optimizer optimizer = new Optimizer();
+        List<Week> optimized = optimizer.optimize(weeks);
+        String html1 = createHtml(optimized);
+
+        writer.append("<h1>Poll ranking</h1>\n");
+        writer.append(html);
+
+        writer.append("<h1>Planning</h1>\n");
+        writer.append(html1);
+
+        writer.append("</body>\n");
+        writer.append("</html>");
+
+        Path path = Paths.get("files/out/planning.html");
+        Files.write(path, writer.toString().getBytes());
+
     }
 
     String createHtml(List<Week> weeks) {
         StringBuilder html = new StringBuilder();
-
-        html.append("<html>\n");
-        html.append("<head>\n");
-        html.append("<title>Planning</title>\n");
-        html.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"planning.css\">");
-        html.append("</head>\n");
-
-        html.append("<body>\n");
-        html.append("<h1>Planning</h1>\n");
 
         html.append("<table>\n");
 
@@ -61,10 +75,6 @@ public class PlanningWriter {
 
         html.append("</tr>");
         html.append("</table>");
-
-
-        html.append("</body>\n");
-        html.append("</html>");
 
         return html.toString();
     }

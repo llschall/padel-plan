@@ -27,19 +27,21 @@ public class Optimizer {
                 }
             }
 
+            List<String> names1 = new ArrayList<>();
+            names1.addAll(first);
+            names1.addAll(second);
+
             Week week1 = new Week(week.name);
             list.add(week1);
 
-            for (String name : first) {
-                Slot newSlot = new Slot(new Player(name), false);
-                week1.slots.add(newSlot);
-            }
-
-            for (String name : second) {
-                Slot newSlot = new Slot(new Player(name), false);
-                week1.slots.add(newSlot);
-                if (week1.slots.size() > 4)
+            for (int i = 0; i < names1.size(); i++) {
+                String name = names1.get(i);
+                boolean isSubstitute = i > 3;
+                if (isSubstitute) {
                     substitutes.add(name);
+                }
+                Slot newSlot = new Slot(new Player(name), isSubstitute);
+                week1.slots.add(newSlot);
             }
         }
         return list;
