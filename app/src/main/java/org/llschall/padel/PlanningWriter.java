@@ -22,15 +22,25 @@ public class PlanningWriter {
 
         String html = createHtml(weeks);
 
-        Optimizer optimizer = new Optimizer();
-        List<Week> optimized = optimizer.optimize(weeks);
-        String html1 = createHtml(optimized);
-
         writer.append("<h1>Poll ranking</h1>\n");
         writer.append(html);
 
+        Balancer balancer = new Balancer();
+        List<Week> balanced = balancer.balance(weeks);
+
+        writer.append("<h1>Balanced ranking</h1>\n");
+        writer.append("<p><i>Counts: ");
+        balancer.map.entrySet().stream()
+                .sorted((e1, e2) -> Integer.compare(e1.getValue(), e2.getValue()))
+                .forEach(entry -> writer.append(entry.getKey()).append(":").append(String.valueOf(entry.getValue())).append("; "));
+        writer.append("</i></p>");
+        writer.append(createHtml(balanced));
+
+        Optimizer optimizer = new Optimizer();
+        List<Week> optimized = optimizer.optimize(balanced);
+
         writer.append("<h1>Planning</h1>\n");
-        writer.append(html1);
+        writer.append(createHtml(optimized));
 
         writer.append("</body>\n");
         writer.append("</html>");
