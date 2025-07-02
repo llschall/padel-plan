@@ -19,7 +19,7 @@ public class OptimizerTest {
     void testOptimize() {
 
         // Create a sample list of weeks
-        Week week1 = new Week("Week 1");
+        Session week1 = new Session("Session 1");
 
         week1.slots.add(new Slot(playerA, false));
         week1.slots.add(new Slot(playerB, false));
@@ -28,7 +28,7 @@ public class OptimizerTest {
         week1.slots.add(new Slot(playerE, false));
         week1.slots.add(new Slot(playerF, false));
 
-        Week week2 = new Week("Week 2");
+        Session week2 = new Session("Session 2");
 
         week2.slots.add(new Slot(playerB, false));
         week2.slots.add(new Slot(playerD, false));
@@ -38,13 +38,13 @@ public class OptimizerTest {
 
         // Create an instance of Optimizer
         Optimizer optimizer = new Optimizer();
-        List<Week> optimized = optimizer.optimize(List.of(week1, week2));
+        List<Session> optimized = optimizer.optimize(List.of(week1, week2));
 
-        Assertions.assertEquals("ABCDEF",dumpWeek(optimized.get(0)));
-        Assertions.assertEquals("EFBDG",dumpWeek(optimized.get(1)));
+        Assertions.assertEquals("ABCDEF", dumpWeek(optimized.get(0)));
+        Assertions.assertEquals("EFBDG", dumpWeek(optimized.get(1)));
     }
 
-    String dumpWeek(Week week) {
+    String dumpWeek(Session week) {
         StringBuilder sb = new StringBuilder();
         for (Slot slot : week.slots) {
             sb.append(slot.player.name);

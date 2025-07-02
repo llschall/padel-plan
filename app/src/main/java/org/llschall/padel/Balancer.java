@@ -12,9 +12,9 @@ public class Balancer {
 
     final Map<String, Integer> map = new java.util.HashMap<>();
 
-    List<Week> balance(List<Week> weeks) {
+    List<Session> balance(List<Session> weeks) {
 
-        for (Week week : weeks) {
+        for (Session week : weeks) {
             for (Slot slot : week.slots) {
                 String name = slot.player.name;
                 if (!map.containsKey(name)) map.put(name, 0);
@@ -22,9 +22,9 @@ public class Balancer {
             }
         }
 
-        List<Week> list = new ArrayList<>();
+        List<Session> list = new ArrayList<>();
 
-        for (Week week : weeks) {
+        for (Session week : weeks) {
 
             Set<Wrapper> set = new TreeSet<>(new Comparator<Wrapper>() {
                 @Override
@@ -46,9 +46,9 @@ public class Balancer {
                 set.add(new Wrapper(name, i, map.get(name)));
             }
 
-            Week week1 = new Week(week.name);
+            Session week1 = new Session(week.name);
             list.add(week1);
-            
+
             for (Wrapper wrapper : set) {
                 Slot newSlot = new Slot(new Player(wrapper.name), false);
                 week1.slots.add(newSlot);

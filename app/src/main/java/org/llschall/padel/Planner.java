@@ -8,7 +8,7 @@ public class Planner {
     void process() throws IOException {
         System.out.println("Processing the planner...");
 
-        List<Week> weeks = new WeekFileReader().readWeeks();
+        List<Session> weeks = new SessionFileReader().readSessions();
         new PlanningWriter().write(weeks);
     }
 

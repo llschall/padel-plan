@@ -3,14 +3,14 @@ package org.llschall.padel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Week {
+public class Session {
 
     final String name;
 
-    public Week(String name) {
+    public Session(String name) {
         this.name = name;
     }
 
-    final List<Slot> slots= new ArrayList<>();
+    final List<Slot> slots = new ArrayList<>();
 
 }

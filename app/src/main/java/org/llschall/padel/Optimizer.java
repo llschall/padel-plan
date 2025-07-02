@@ -7,13 +7,13 @@ import java.util.Set;
 
 public class Optimizer {
 
-    List<Week> optimize(List<Week> weeks) {
+    List<Session> optimize(List<Session> weeks) {
 
-        ArrayList<Week> list = new ArrayList<>();
+        ArrayList<Session> list = new ArrayList<>();
 
         Set<String> substitutes = new HashSet<>();
 
-        for (Week week : weeks) {
+        for (Session week : weeks) {
 
             List<String> first = new ArrayList<>();
             List<String> second = new ArrayList<>();
@@ -31,7 +31,7 @@ public class Optimizer {
             names1.addAll(first);
             names1.addAll(second);
 
-            Week week1 = new Week(week.name);
+            Session week1 = new Session(week.name);
             list.add(week1);
 
             for (int i = 0; i < names1.size(); i++) {

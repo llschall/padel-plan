@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class WeekFileReader {
+public class SessionFileReader {
 
-    List<Week> readWeeks() throws IOException {
+    List<Session> readSessions() throws IOException {
 
         // Create a list to hold the weeks
-        List<Week> list = new ArrayList<>();
+        List<Session> list = new ArrayList<>();
 
         Path path = Paths.get("files/in");
 
@@ -21,21 +21,21 @@ public class WeekFileReader {
         Stream<Path> paths = Files.list(path).sorted();
 
         paths.forEach((p) -> {
-            // Read each week from the file and add it to the list
-            Week week = readWeek(p);
-            list.add(week);
+            // Read each session from the file and add it to the list
+            Session session = readSession(p);
+            list.add(session);
         });
 
         return list;
     }
 
-    Week readWeek(Path path) {
+    Session readSession(Path path) {
         // Create a new Week object
-        Week week = new Week(path.getFileName().toString());
+        Session session = new Session(path.getFileName().toString());
 
-        // Here you would read the file and populate the week object
-        // For now, we will just return an empty week
-        System.out.println("Reading week from: " + path);
+        // Here you would read the file and populate the session object
+        // For now, we will just return an empty session
+        System.out.println("Reading session from: " + path);
 
         // Read the file content
         List<String> lines = null;
@@ -48,9 +48,9 @@ public class WeekFileReader {
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             Player player = new Player(line);
-            week.slots.add(new Slot(player, false));
+            session.slots.add(new Slot(player, false));
         }
 
-        return week;
+        return session;
     }
 }

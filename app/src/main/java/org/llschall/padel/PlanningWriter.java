@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PlanningWriter {
 
-    void write(List<Week> weeks) throws IOException {
+    void write(List<Session> weeks) throws IOException {
         System.out.println("Writing the planning...");
 
         StringWriter writer = new StringWriter();
@@ -26,7 +26,7 @@ public class PlanningWriter {
         writer.append(html);
 
         Balancer balancer = new Balancer();
-        List<Week> balanced = balancer.balance(weeks);
+        List<Session> balanced = balancer.balance(weeks);
 
         writer.append("<h1>Balanced ranking</h1>\n");
         writer.append("<p><i>Counts: ");
@@ -37,7 +37,7 @@ public class PlanningWriter {
         writer.append(createHtml(balanced));
 
         Optimizer optimizer = new Optimizer();
-        List<Week> optimized = optimizer.optimize(balanced);
+        List<Session> optimized = optimizer.optimize(balanced);
 
         writer.append("<h1>Planning</h1>\n");
         writer.append(createHtml(optimized));
@@ -50,22 +50,22 @@ public class PlanningWriter {
 
     }
 
-    String createHtml(List<Week> weeks) {
+    String createHtml(List<Session> weeks) {
         StringBuilder html = new StringBuilder();
 
         html.append("<table>\n");
 
         html.append("<tr>");
-        for (Week week : weeks) {
+        for (Session week : weeks) {
             html.append("<th>");
-            html.append(new Beautifier().beautifyWeekName(week.name));
+            html.append(new Beautifier().beautifySessionName(week.name));
             html.append("</th>\n");
         }
 
         html.append("</tr>\n");
 
         html.append("<tr>");
-        for (Week week : weeks) {
+        for (Session week : weeks) {
             html.append("<td><ul>");
 
             for (Slot slot : week.slots) {

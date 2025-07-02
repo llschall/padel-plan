@@ -7,10 +7,10 @@ public class BeautifierTest {
 
     // Test method to check the beautification of week names
     @Test
-    void testBeautifyWeekName() {
+    void testBeautifySessionName() {
         Beautifier beautifier = new Beautifier();
 
-        String result = beautifier.beautifyWeekName("week-1.txt");
-        Assertions.assertEquals("Week 1", result);
+        String result = beautifier.beautifySessionName("session-1982.txt");
+        Assertions.assertEquals("Session 1982", result);
     }
 }
