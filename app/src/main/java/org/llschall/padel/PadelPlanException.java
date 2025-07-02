@@ -1,6 +1,10 @@
 package org.llschall.padel;
 
-public class PadelPlanException extends RuntimeException {
+class PadelPlanException extends RuntimeException {
+
+    PadelPlanException(String message) {
+        super(message);
+    }
 
     PadelPlanException(Exception cause) {
         super(cause);

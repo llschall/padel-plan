@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlanningWriter {
@@ -41,6 +42,31 @@ public class PlanningWriter {
 
         writer.append("<h1>Planning</h1>\n");
         writer.append(createHtml(optimized));
+
+        writer.append("<br>");
+        writer.append("<table><tr>\n");
+        Rater rater = new Rater(optimized);
+        ArrayList<Player> list = new ArrayList<>(rater.map.keySet());
+        for (Player player : list) {
+            writer.write("<th>" + player.name + "</th>\n");
+        }
+        writer.append("</tr><tr>\n");
+        for (Player player : list) {
+            Rating rating = rater.map.get(player);
+            writer.write("<td>" + rating.slot + "</td>\n");
+        }
+        writer.append("</tr><tr>\n");
+        for (Player player : list) {
+            Rating rating = rater.map.get(player);
+            writer.write("<td class=\"substitute\">(" + rating.substitute + ")</td>\n");
+        }
+        writer.append("</tr><tr>\n");
+        for (Player player : list) {
+            Rating rating = rater.map.get(player);
+            writer.write("<td>" + rating.getRating() + "%</td>\n");
+        }
+
+        writer.append("</tr></table>\n");
 
         writer.append("</body>\n");
         writer.append("</html>");
