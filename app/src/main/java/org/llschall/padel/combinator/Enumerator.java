@@ -7,27 +7,9 @@ public class Enumerator {
 
     final List<List<String[]>> combinations = new ArrayList<>();
 
+    final Combinator combinator = new Combinator();
+
     List<String[]> list;
-
-    public static void main(String[] args) {
-
-        System.out.println("### Started ###");
-        long time = System.nanoTime();
-
-        Enumerator enumerator = new Enumerator();
-        enumerator.process(new String[][]{
-                {"A", "B", "C",},
-                {"D", "E", "F",},
-                {"G", "H", "I",},
-        });
-
-        time = System.nanoTime() - time;
-
-        // print time in seconds
-        System.out.println("Time taken: " + time / 1_000_000 + " ms");
-        System.out.println("### Finished ###");
-
-    }
 
     void process(String[][] list) {
 
@@ -39,7 +21,6 @@ public class Enumerator {
         }
 
         System.out.println("### Combinations ###");
-        Combinator combinator = new Combinator();
         combinator.combine(combinations);
         System.out.println(combinator.count + " combinations found.");
 

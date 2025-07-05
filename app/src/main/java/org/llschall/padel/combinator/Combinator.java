@@ -7,19 +7,18 @@ public class Combinator {
 
     List<String[]> cursor = new ArrayList<>();
 
-    int count = 0;
+    long count = 0;
 
     void combine(List<List<String[]>> list) {
         combineRec(0, list);
     }
 
-    void combineRec(int index, List<List<String[]>> list) {
+    private void combineRec(int index, List<List<String[]>> list) {
         if (index == list.size()) {
-            for (String[] strings : cursor) {
-                System.out.print(" > " + String.join(" ", strings));
-            }
-            System.out.println();
             count++;
+            if (count % 1_000_000_000 == 0) {
+                System.out.println(count);
+            }
             return;
         }
 
