@@ -5,44 +5,43 @@ import java.util.List;
 
 public class Enumerator {
 
-    final List<List<String[]>> combinations = new ArrayList<>();
+    final List<List<Sequence>> combinations = new ArrayList<>();
 
     final Combinator combinator = new Combinator();
 
-    List<String[]> list;
+    List<Sequence> list;
 
-    void process(String[][] list) {
+    void process(Sequence[] sequences) {
 
         System.out.println("### Enumerations ###");
-        for (String[] strings : list) {
+        for (Sequence sequence : sequences) {
             this.list = new ArrayList<>();
             combinations.add(this.list);
-            processRec(strings, 0);
+            processRec(sequence, 0);
         }
 
         System.out.println("### Combinations ###");
         combinator.combine(combinations);
         System.out.println(combinator.count + " combinations found.");
-
     }
 
-    void processRec(String[] list, int index) {
+    void processRec(Sequence sequence, int index) {
 
-        if (index == list.length) {
+        if (index == sequence.data.length) {
             // store the current combination
-            this.list.add(list.clone());
+            this.list.add(sequence.freeze());
             return;
         }
 
-        for (int i = index; i < list.length; i++) {
+        for (int i = index; i < sequence.data.length; i++) {
             // swap the elements
-            String s = list[i];
-            list[i] = list[index];
-            list[index] = s;
-            processRec(list, index + 1);
+            String s = sequence.data[i];
+            sequence.data[i] = sequence.data[index];
+            sequence.data[index] = s;
+            processRec(sequence, index + 1);
             // swap back to restore the original order
-            list[index] = list[i];
-            list[i] = s;
+            sequence.data[index] = sequence.data[i];
+            sequence.data[i] = s;
         }
     }
 }
