@@ -2,6 +2,7 @@ package org.llschall.padel.combinator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Enumerator {
 
@@ -11,17 +12,17 @@ public class Enumerator {
 
     List<Sequence> list;
 
-    void process(Sequence[] sequences) {
+    void process(Sequence[] poll, Consumer<List<Sequence>> consumer) {
 
         System.out.println("### Enumerations ###");
-        for (Sequence sequence : sequences) {
+        for (Sequence sequence : poll) {
             this.list = new ArrayList<>();
             combinations.add(this.list);
             processRec(sequence, 0);
         }
 
         System.out.println("### Combinations ###");
-        combinator.combine(combinations);
+        combinator.combine(combinations, consumer);
         System.out.println(combinator.count + " combinations found.");
     }
 
