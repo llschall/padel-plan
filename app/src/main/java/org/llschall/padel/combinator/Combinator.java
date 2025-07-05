@@ -7,6 +7,8 @@ public class Combinator {
 
     List<String[]> cursor = new ArrayList<>();
 
+    int count = 0;
+
     void combine(List<List<String[]>> list) {
         combineRec(0, list);
     }
@@ -17,6 +19,7 @@ public class Combinator {
                 System.out.print(" > " + String.join(" ", strings));
             }
             System.out.println();
+            count++;
             return;
         }
 

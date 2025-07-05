@@ -10,32 +10,38 @@ public class Enumerator {
     List<String[]> list;
 
     public static void main(String[] args) {
-        System.out.println("Enumerator.main");
+
+        System.out.println("### Started ###");
+        long time = System.nanoTime();
+
         Enumerator enumerator = new Enumerator();
         enumerator.process(new String[][]{
                 {"A", "B", "C",},
                 {"D", "E", "F",},
                 {"G", "H", "I",},
         });
+
+        time = System.nanoTime() - time;
+
+        // print time in seconds
+        System.out.println("Time taken: " + time / 1_000_000 + " ms");
+        System.out.println("### Finished ###");
+
     }
 
     void process(String[][] list) {
+
+        System.out.println("### Enumerations ###");
         for (String[] strings : list) {
             this.list = new ArrayList<>();
             combinations.add(this.list);
             processRec(strings, 0);
         }
 
-        for (List<String[]> combination : combinations) {
-            System.out.println("Combination:");
-            for (String[] team : combination) {
-                System.out.println("  " + String.join(", ", team));
-            }
-            System.out.println("combination.size() = " + combination.size());
-        }
-
+        System.out.println("### Combinations ###");
         Combinator combinator = new Combinator();
         combinator.combine(combinations);
+        System.out.println(combinator.count + " combinations found.");
 
     }
 
