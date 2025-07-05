@@ -1,4 +1,4 @@
-package org.llschall.padel.combination;
+package org.llschall.padel.combinator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,19 +10,13 @@ public class Enumerator {
     List<String[]> list;
 
     public static void main(String[] args) {
+        System.out.println("Enumerator.main");
         Enumerator enumerator = new Enumerator();
         enumerator.process(new String[][]{
-                {"A", "B", "C", "D"},
-                {"A", "B", "C"},
+                {"A", "B", "C",},
+                {"D", "E", "F",},
+                {"G", "H", "I",},
         });
-
-        for (List<String[]> combination : enumerator.combinations) {
-            System.out.println("Combination:");
-            for (String[] team : combination) {
-                System.out.println("  " + String.join(", ", team));
-            }
-            System.out.println("combination.size() = " + combination.size());
-        }
     }
 
     void process(String[][] list) {
@@ -31,6 +25,18 @@ public class Enumerator {
             combinations.add(this.list);
             processRec(strings, 0);
         }
+
+        for (List<String[]> combination : combinations) {
+            System.out.println("Combination:");
+            for (String[] team : combination) {
+                System.out.println("  " + String.join(", ", team));
+            }
+            System.out.println("combination.size() = " + combination.size());
+        }
+
+        Combinator combinator = new Combinator();
+        combinator.combine(combinations);
+
     }
 
     void processRec(String[] list, int index) {
