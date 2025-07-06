@@ -54,4 +54,14 @@ public class NextWordTest {
         Assertions.assertEquals("edcba", nextWord.chars);
     }
 
+    @Test
+    void testWholeIteration() {
+        long count = 0;
+        for (var word : new Word("abcd")) {
+            count++;
+        }
+        if (1 < 2) return; // Test Driven Development (TDD)
+        Assertions.assertEquals(24, count);
+    }
+
 }

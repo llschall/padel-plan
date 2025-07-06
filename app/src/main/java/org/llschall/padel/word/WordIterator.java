@@ -7,6 +7,8 @@ import java.util.Iterator;
 
 public class WordIterator implements Iterator<Word> {
 
+    private boolean first = true;
+
     private Word word;
 
     public WordIterator(Word word) {
@@ -15,6 +17,7 @@ public class WordIterator implements Iterator<Word> {
 
     @Override
     public boolean hasNext() {
+
         String chars = word.chars;
         for (int i = chars.length() - 1; i > 0; i--) {
             char c0 = chars.charAt(i - 1);
