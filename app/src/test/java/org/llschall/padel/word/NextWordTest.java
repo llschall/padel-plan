@@ -29,4 +29,29 @@ public class NextWordTest {
         Assertions.assertEquals("acbd", nextWord.chars);
     }
 
+    @Test
+    void testNext2() {
+        WordIterator iterator = new Word("abecd").iterator();
+        Assertions.assertTrue(iterator.hasNext());
+        Word nextWord = iterator.next();
+        Assertions.assertEquals("abedc", nextWord.chars);
+    }
+
+    @Test
+    void testNext3() {
+        WordIterator iterator = new Word("acfzg").iterator();
+        Assertions.assertTrue(iterator.hasNext());
+        Word nextWord = iterator.next();
+        Assertions.assertEquals("acgfz", nextWord.chars);
+    }
+
+
+    @Test
+    void testNextLast() {
+        WordIterator iterator = new Word("edcab").iterator();
+        Assertions.assertTrue(iterator.hasNext());
+        Word nextWord = iterator.next();
+        Assertions.assertEquals("edcba", nextWord.chars);
+    }
+
 }
