@@ -2,8 +2,6 @@ package org.llschall.padel.word;
 
 import org.jspecify.annotations.NonNull;
 
-import java.util.Iterator;
-
 public class Word implements Iterable<Word> {
 
     public final CharSequence chars;
@@ -13,7 +11,7 @@ public class Word implements Iterable<Word> {
     }
 
     @Override
-    public @NonNull Iterator<Word> iterator() {
+    public @NonNull WordIterator iterator() {
         return new WordIterator(this);
     }
 }

@@ -2,6 +2,7 @@ package org.llschall.padel.word;
 
 import org.llschall.padel.PadelPlanException;
 
+import java.io.StringWriter;
 import java.util.Iterator;
 
 public class WordIterator implements Iterator<Word> {
@@ -16,9 +17,9 @@ public class WordIterator implements Iterator<Word> {
     public boolean hasNext() {
         CharSequence chars = word.chars;
         for (int i = chars.length() - 1; i > 0; i--) {
-            char c0 = chars.charAt(i);
-            char c1 = chars.charAt(i - 1);
-            if (c1 < c0) {
+            char c0 = chars.charAt(i - 1);
+            char c1 = chars.charAt(i);
+            if (c1 > c0) {
                 return true;
             }
         }
@@ -27,9 +28,26 @@ public class WordIterator implements Iterator<Word> {
 
     @Override
     public Word next() {
-        if (!hasNext()) {
-            throw new PadelPlanException("No more characters in the word to iterate over.");
+        CharSequence chars = word.chars;
+        for (int i = chars.length() - 1; i > 0; i--) {
+            char c0 = chars.charAt(i - 1);
+            char c1 = chars.charAt(i);
+            if (c1 > c0) {
+                return buildNext(i - 1);
+            }
         }
-        return new Word("");
+        throw new PadelPlanException("No more characters in the word to iterate over.");
+    }
+
+    Word buildNext(int i) {
+        CharSequence chars = word.chars;
+        char c = chars.charAt(i);
+        String next = chars.subSequence(i + 1, chars.length()).toString();
+        StringWriter writer = new StringWriter();
+        writer.write(chars.subSequence(0, i).toString());
+        writer.write(next);
+        writer.write(c);
+        
+        return new Word(writer.toString());
     }
 }
