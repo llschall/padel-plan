@@ -14,16 +14,19 @@ public class NextWordTest {
     }
 
     @Test
-    void testNext() {
+    void testNext0() {
         WordIterator iterator = new Word("abcd").iterator();
         Assertions.assertTrue(iterator.hasNext());
         Word nextWord = iterator.next();
-        Assertions.assertEquals("abdc", nextWord.chars.toString());
+        Assertions.assertEquals("abdc", nextWord.chars);
+    }
 
-        iterator = new Word("abdc").iterator();
+    @Test
+    void testNext1() {
+        WordIterator iterator = new Word("abdc").iterator();
         Assertions.assertTrue(iterator.hasNext());
-        nextWord = iterator.next();
-        //Assertions.assertEquals("acbd", nextWord.chars.toString());
+        Word nextWord = iterator.next();
+        Assertions.assertEquals("acbd", nextWord.chars);
     }
 
 }

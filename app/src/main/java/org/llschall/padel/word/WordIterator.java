@@ -33,7 +33,8 @@ public class WordIterator implements Iterator<Word> {
             char c0 = chars.charAt(i - 1);
             char c1 = chars.charAt(i);
             if (c1 > c0) {
-                return buildNext(i - 1);
+                word = buildNext(i - 1);
+                return word;
             }
         }
         throw new PadelPlanException("No more characters in the word to iterate over.");
@@ -45,8 +46,20 @@ public class WordIterator implements Iterator<Word> {
         String next = chars.subSequence(i + 1, chars.length()).toString();
         StringWriter writer = new StringWriter();
         writer.write(chars.subSequence(0, i).toString());
-        writer.write(next);
-        writer.write(c);
+        // Sort the characters of next in ascending order
+        char[] nextChars = next.toCharArray();
+        java.util.Arrays.sort(nextChars);
+        for (int i1 = 0; i1 < nextChars.length; i1++) {
+            char n = nextChars[i1];
+            if (n > c) {
+                writer.write(n);
+                nextChars[i1] = c;
+                break;
+            }
+        }
+        for (char n : nextChars) {
+            writer.write(n);
+        }
 
         return new Word(writer.toString());
     }
