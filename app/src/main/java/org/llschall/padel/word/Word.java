@@ -4,9 +4,9 @@ import org.jspecify.annotations.NonNull;
 
 public class Word implements Iterable<Word> {
 
-    public final CharSequence chars;
+    public final String chars;
 
-    public Word(CharSequence chars) {
+    public Word(String chars) {
         this.chars = chars;
     }
 

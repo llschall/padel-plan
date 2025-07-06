@@ -15,7 +15,7 @@ public class WordIterator implements Iterator<Word> {
 
     @Override
     public boolean hasNext() {
-        CharSequence chars = word.chars;
+        String chars = word.chars;
         for (int i = chars.length() - 1; i > 0; i--) {
             char c0 = chars.charAt(i - 1);
             char c1 = chars.charAt(i);
@@ -28,7 +28,7 @@ public class WordIterator implements Iterator<Word> {
 
     @Override
     public Word next() {
-        CharSequence chars = word.chars;
+        String chars = word.chars;
         for (int i = chars.length() - 1; i > 0; i--) {
             char c0 = chars.charAt(i - 1);
             char c1 = chars.charAt(i);
@@ -47,7 +47,7 @@ public class WordIterator implements Iterator<Word> {
         writer.write(chars.subSequence(0, i).toString());
         writer.write(next);
         writer.write(c);
-        
+
         return new Word(writer.toString());
     }
 }
