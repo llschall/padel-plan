@@ -15,38 +15,44 @@ import java.util.List;
 public class PlanningWriter {
 
     void write(List<Session> weeks) throws IOException {
-        System.out.println("Writing the planning...");
+        System.out.println("Writing the planningRow...");
 
         Document document = Jsoup.parse("<html><head></head><body></body></html>", "", Parser.xmlParser());
         Element head = document.head();
         head.appendElement("title").text("Planning");
-        head.appendElement("link").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "planning.css");
+        head.appendElement("link").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "planningRow.css");
         Element body = document.body();
 
-        body.appendElement("h1").text("Poll ranking");
+        Element root = body.appendElement("table").attr("border", "1");
+
+        Element topRow = root.appendElement("tr").appendElement("td");
+        Element strategyRow = root.appendElement("tr").appendElement("td");
+        Element planningRow = root.appendElement("tr").appendElement("td");
+        Element ratingRow = root.appendElement("tr").appendElement("td");
+
+        topRow.appendElement("h1").text("Poll ranking");
         String html = createHtml(weeks);
-        body.append(html);
+        topRow.append(html);
 
         Balancer balancer = new Balancer();
         List<Session> balanced = balancer.balance(weeks);
 
-        body.appendElement("h1").text("Balanced ranking");
-        Element pCounts = body.appendElement("p").appendElement("i");
+        strategyRow.appendElement("h1").text("Balanced ranking");
+        Element pCounts = strategyRow.appendElement("p").appendElement("i");
         pCounts.appendText("Counts: ");
         balancer.map.entrySet().stream()
                 .sorted((e1, e2) -> Integer.compare(e1.getValue(), e2.getValue()))
                 .forEach(entry -> pCounts.appendText(entry.getKey() + ":" + entry.getValue() + "; "));
-        body.append(createHtml(balanced));
+        strategyRow.append(createHtml(balanced));
 
         Optimizer optimizer = new Optimizer();
         List<Session> optimized = optimizer.optimize(balanced);
 
-        body.appendElement("h1").text("Planning");
-        body.append(createHtml(optimized));
+        planningRow.appendElement("h1").text("Planning");
+        planningRow.append(createHtml(optimized));
 
-        body.appendElement("br");
 
-        Element table = body.appendElement("table");
+        Element table = ratingRow.appendElement("table");
         Element trHeader = table.appendElement("tr");
         Rater rater = new Rater(optimized);
         List<Player> list = new ArrayList<>(rater.map.keySet());
@@ -100,6 +106,5 @@ public class PlanningWriter {
         }
         return table.outerHtml();
     }
-
 
 }
