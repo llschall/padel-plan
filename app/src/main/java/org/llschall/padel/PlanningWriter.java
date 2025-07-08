@@ -1,7 +1,11 @@
 package org.llschall.padel;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
+
 import java.io.IOException;
-import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,106 +17,88 @@ public class PlanningWriter {
     void write(List<Session> weeks) throws IOException {
         System.out.println("Writing the planning...");
 
-        StringWriter writer = new StringWriter();
-        writer.append("<html>\n");
-        writer.append("<head>\n");
-        writer.append("<title>Planning</title>\n");
-        writer.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"planning.css\">");
-        writer.append("</head>\n");
-        writer.append("<body>\n");
+        Document document = Jsoup.parse("<html><head></head><body></body></html>", "", Parser.xmlParser());
+        Element head = document.head();
+        head.appendElement("title").text("Planning");
+        head.appendElement("link").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "planning.css");
+        Element body = document.body();
 
+        body.appendElement("h1").text("Poll ranking");
         String html = createHtml(weeks);
-
-        writer.append("<h1>Poll ranking</h1>\n");
-        writer.append(html);
+        body.append(html);
 
         Balancer balancer = new Balancer();
         List<Session> balanced = balancer.balance(weeks);
 
-        writer.append("<h1>Balanced ranking</h1>\n");
-        writer.append("<p><i>Counts: ");
+        body.appendElement("h1").text("Balanced ranking");
+        Element pCounts = body.appendElement("p").appendElement("i");
+        pCounts.appendText("Counts: ");
         balancer.map.entrySet().stream()
                 .sorted((e1, e2) -> Integer.compare(e1.getValue(), e2.getValue()))
-                .forEach(entry -> writer.append(entry.getKey()).append(":").append(String.valueOf(entry.getValue())).append("; "));
-        writer.append("</i></p>");
-        writer.append(createHtml(balanced));
+                .forEach(entry -> pCounts.appendText(entry.getKey() + ":" + entry.getValue() + "; "));
+        body.append(createHtml(balanced));
 
         Optimizer optimizer = new Optimizer();
         List<Session> optimized = optimizer.optimize(balanced);
 
-        writer.append("<h1>Planning</h1>\n");
-        writer.append(createHtml(optimized));
+        body.appendElement("h1").text("Planning");
+        body.append(createHtml(optimized));
 
-        writer.append("<br>");
-        writer.append("<table><tr>\n");
+        body.appendElement("br");
+
+        Element table = body.appendElement("table");
+        Element trHeader = table.appendElement("tr");
         Rater rater = new Rater(optimized);
-        ArrayList<Player> list = new ArrayList<>(rater.map.keySet());
+        List<Player> list = new ArrayList<>(rater.map.keySet());
         for (Player player : list) {
-            writer.write("<th>" + player.name + "</th>\n");
+            trHeader.appendElement("th").text(player.name);
         }
-        writer.append("</tr><tr>\n");
-        for (Player player : list) {
-            Rating rating = rater.map.get(player);
-            writer.write("<td>" + rating.slot + "</td>\n");
-        }
-        writer.append("</tr><tr>\n");
+        Element trSlot = table.appendElement("tr");
         for (Player player : list) {
             Rating rating = rater.map.get(player);
-            writer.write("<td class=\"substitute\">(" + rating.substitute + ")</td>\n");
+            trSlot.appendElement("td").text(String.valueOf(rating.slot));
         }
-        writer.append("</tr><tr>\n");
+        Element trSub = table.appendElement("tr");
         for (Player player : list) {
             Rating rating = rater.map.get(player);
-            writer.write("<td>" + rating.getRating() + "%</td>\n");
+            trSub.appendElement("td").addClass("substitute").text("(" + rating.substitute + ")");
         }
-
-        writer.append("</tr></table>\n");
-
-        writer.append("</body>\n");
-        writer.append("</html>");
+        Element trRating = table.appendElement("tr");
+        for (Player player : list) {
+            Rating rating = rater.map.get(player);
+            trRating.appendElement("td").text(rating.getRating() + "%");
+        }
 
         Path path = Paths.get("files/out/planning.html");
-        Files.write(path, writer.toString().getBytes());
+        Files.write(path, document.html().getBytes());
 
     }
 
     String createHtml(List<Session> weeks) {
-        StringBuilder html = new StringBuilder();
+        // Use jsoup to build the table
+        Document doc = Jsoup.parse("<table></table>");
+        Element table = doc.selectFirst("table");
 
-        html.append("<table>\n");
-
-        html.append("<tr>");
+        Element trHeader = table.appendElement("tr");
         for (Session week : weeks) {
-            html.append("<th>");
-            html.append(new Beautifier().beautifySessionName(week.name));
-            html.append("</th>\n");
+            trHeader.appendElement("th").text(new Beautifier().beautifySessionName(week.name));
         }
 
-        html.append("</tr>\n");
-
-        html.append("<tr>");
+        Element trBody = table.appendElement("tr");
         for (Session week : weeks) {
-            html.append("<td><ul>");
-
+            Element td = trBody.appendElement("td");
+            Element ul = td.appendElement("ul");
             for (Slot slot : week.slots) {
-                html.append("<li");
-                if (slot.isSubstitute)
-                    html.append(" class=\"substitute\"");
-                html.append(">");
-                if (slot.isSubstitute)
-                    html.append("(");
-                html.append(slot.player.name);
-                if (slot.isSubstitute)
-                    html.append(")");
-                html.append("</li>");
+                Element li = ul.appendElement("li");
+                if (slot.isSubstitute) {
+                    li.addClass("substitute");
+                    li.text("(" + slot.player.name + ")");
+                } else {
+                    li.text(slot.player.name);
+                }
             }
-            html.append("</ul></td>\n");
         }
-
-        html.append("</tr>");
-        html.append("</table>");
-
-        return html.toString();
+        return table.outerHtml();
     }
 
 
