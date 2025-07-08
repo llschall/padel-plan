@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+
+
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
 
@@ -23,6 +25,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+    implementation(libs.jsoup)
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
