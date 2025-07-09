@@ -1,5 +1,6 @@
 package org.llschall.padel.strategy;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.llschall.padel.Balancer;
@@ -14,7 +15,7 @@ public class Strategy implements IStrategy {
     private String details;
 
     private List<Session> optimized;
-    
+
     @Override
     public String getName() {
         return "Balanced Strategy";
@@ -35,21 +36,21 @@ public class Strategy implements IStrategy {
         Balancer balancer = new Balancer();
         List<Session> balanced = balancer.balance(sessions);
 
-        Document document = new Document("");
+        Document doc = Jsoup.parse("<div></div>");
+        Element element = doc.selectFirst("div");
 
-        Element pCounts = document.appendElement("p").appendElement("i");
+        Element pCounts = element.appendElement("p").appendElement("i");
         pCounts.appendText("Counts:");
         balancer.map.entrySet().stream()
                 .sorted((e1, e2) -> Integer.compare(e1.getValue(), e2.getValue()))
                 .forEach(entry -> pCounts.appendText(entry.getKey() + ":" + entry.getValue() + "; "));
 
-        document.append(new PlanningWriter().createHtml(balanced));
+        element.append(new PlanningWriter().createHtml(balanced));
 
-        details = document.html();
+        details = element.html();
 
         Optimizer optimizer = new Optimizer();
         optimized = optimizer.optimize(balanced);
-
     }
 
 }
