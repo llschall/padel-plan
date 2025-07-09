@@ -9,19 +9,33 @@ import org.llschall.padel.Session;
 
 import java.util.List;
 
-public class Strategy {
+public class Strategy implements IStrategy {
 
-    public String name;
+    private String name;
 
-    public String details;
+    private String details;
 
-    public List<Session> optimized;
-
+    private List<Session> optimized;
 
     public Strategy(String name) {
         this.name = name;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getDetails() {
+        return details;
+    }
+
+    public List<Session> getOptimized() {
+        return optimized;
+    }
+
+    @Override
     public void process(List<Session> sessions) {
 
         Balancer balancer = new Balancer();

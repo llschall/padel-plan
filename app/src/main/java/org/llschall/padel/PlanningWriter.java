@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
-import org.llschall.padel.strategy.Strategy;
+import org.llschall.padel.strategy.IStrategy;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PlanningWriter {
 
-    void write(List<Session> weeks, Strategy... strategies) throws IOException {
+    void write(List<Session> weeks, IStrategy... strategies) throws IOException {
         System.out.println("Writing the planning...");
 
         Document document = Jsoup.parse("<html><head></head><body></body></html>", "", Parser.xmlParser());
@@ -39,25 +39,27 @@ public class PlanningWriter {
         String html = createHtml(weeks);
         topRow.append(html);
 
-        for (Strategy strategy : strategies) {
+        for (IStrategy strategy : strategies) {
+            
             Element cursor = strategyRow.appendElement("td");
-            cursor.appendElement("h1").text(strategy.name);
-            cursor.appendElement(strategy.details);
+            cursor.appendElement("h1").text(strategy.getName());
+            cursor.appendElement(strategy.getDetails());
         }
 
-        for (Strategy strategy : strategies) {
+        for (IStrategy strategy : strategies) {
+
             Element cursor = planningRow.appendElement("td");
             cursor.appendElement("h1").text("Planning");
-            cursor.append(createHtml(strategy.optimized));
+            cursor.append(createHtml(strategy.getOptimized()));
         }
 
-        for (Strategy strategy : strategies) {
+        for (IStrategy strategy : strategies) {
 
             Element cursor = ratingRow.appendElement("td");
             cursor.appendElement("h1").text("Rating");
             Element table = cursor.appendElement("table");
             Element trHeader = table.appendElement("tr");
-            Rater rater = new Rater(strategy.optimized);
+            Rater rater = new Rater(strategy.getOptimized());
             List<Player> list = new ArrayList<>(rater.map.keySet());
             for (Player player : list) {
                 trHeader.appendElement("th").text(player.name);
