@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Optimizer {
 
-    List<Session> optimize(List<Session> weeks) {
+    public List<Session> optimize(List<Session> weeks) {
 
         ArrayList<Session> list = new ArrayList<>();
 

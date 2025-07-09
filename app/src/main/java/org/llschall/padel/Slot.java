@@ -3,7 +3,7 @@ package org.llschall.padel;
 public class Slot {
 
     Player player;
-    boolean isSubstitute;
+    public boolean isSubstitute;
 
     public Slot(Player player, boolean isSubstitute) {
         this.player = player;

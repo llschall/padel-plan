@@ -10,9 +10,9 @@ import java.util.TreeSet;
 
 public class Balancer {
 
-    final Map<String, Integer> map = new java.util.HashMap<>();
+    public final Map<String, Integer> map = new java.util.HashMap<>();
 
-    List<Session> balance(List<Session> weeks) {
+    public List<Session> balance(List<Session> weeks) {
 
         for (Session week : weeks) {
             for (Slot slot : week.slots) {

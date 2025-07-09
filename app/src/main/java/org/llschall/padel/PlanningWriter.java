@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
+import org.llschall.padel.strategy.IStrategy;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,59 +15,97 @@ import java.util.List;
 
 public class PlanningWriter {
 
-    void write(List<Session> weeks) throws IOException {
+    void write(List<Session> sessions, IStrategy... strategies) throws IOException {
+
+        for (IStrategy strategy : strategies) {
+            // clone the sessions to avoid modifying the original list
+            List<Session> clone = new ArrayList<>(sessions);
+            strategy.process(clone);
+        }
+
         System.out.println("Writing the planning...");
+
+        // Use utf8-encoding to ensure special characters are handled correctly
+        // Create a new HTML document with a head and body
 
         Document document = Jsoup.parse("<html><head></head><body></body></html>", "", Parser.xmlParser());
         Element head = document.head();
+
+        // use utf8 encoding
+        head.appendElement("meta").attr("charset", "utf-8");
         head.appendElement("title").text("Planning");
         head.appendElement("link").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "planning.css");
         Element body = document.body();
 
-        body.appendElement("h1").text("Poll ranking");
-        String html = createHtml(weeks);
-        body.append(html);
+        Element root = body.appendElement("table").attr("border", "1");
 
-        Balancer balancer = new Balancer();
-        List<Session> balanced = balancer.balance(weeks);
+        Element row = root.appendElement("tr")
+                .appendElement("td")
+                .attr("align", "right")
+                .attr("colspan", Integer.toString(strategies.length));
 
-        body.appendElement("h1").text("Balanced ranking");
-        Element pCounts = body.appendElement("p").appendElement("i");
-        pCounts.appendText("Counts: ");
-        balancer.map.entrySet().stream()
-                .sorted((e1, e2) -> Integer.compare(e1.getValue(), e2.getValue()))
-                .forEach(entry -> pCounts.appendText(entry.getKey() + ":" + entry.getValue() + "; "));
-        body.append(createHtml(balanced));
+        row.appendElement("h1").text("Poll ranking");
+        String html = createHtml(sessions);
+        row.append(html);
 
-        Optimizer optimizer = new Optimizer();
-        List<Session> optimized = optimizer.optimize(balanced);
+        row = root.appendElement("tr");
 
-        body.appendElement("h1").text("Planning");
-        body.append(createHtml(optimized));
-
-        body.appendElement("br");
-
-        Element table = body.appendElement("table");
-        Element trHeader = table.appendElement("tr");
-        Rater rater = new Rater(optimized);
-        List<Player> list = new ArrayList<>(rater.map.keySet());
-        for (Player player : list) {
-            trHeader.appendElement("th").text(player.name);
+        for (IStrategy strategy : strategies) {
+            row.appendElement("td").append("&darr;  &darr;  &darr;");
         }
-        Element trSlot = table.appendElement("tr");
-        for (Player player : list) {
-            Rating rating = rater.map.get(player);
-            trSlot.appendElement("td").text(String.valueOf(rating.slot));
+
+        row = root.appendElement("tr");
+
+        for (IStrategy strategy : strategies) {
+
+            Element cursor = row.appendElement("td");
+            cursor.appendElement("h1").text(strategy.getName());
+            cursor.append(strategy.getDetails());
         }
-        Element trSub = table.appendElement("tr");
-        for (Player player : list) {
-            Rating rating = rater.map.get(player);
-            trSub.appendElement("td").addClass("substitute").text("(" + rating.substitute + ")");
+
+        row = root.appendElement("tr");
+
+        for (IStrategy strategy : strategies) {
+            row.appendElement("td").append("&darr;  &darr;  &darr;");
         }
-        Element trRating = table.appendElement("tr");
-        for (Player player : list) {
-            Rating rating = rater.map.get(player);
-            trRating.appendElement("td").text(rating.getRating() + "%");
+
+        row = root.appendElement("tr");
+
+        for (IStrategy strategy : strategies) {
+
+            Element cursor = row.appendElement("td");
+            cursor.appendElement("h1").text("Planning");
+            cursor.append(createHtml(strategy.getOptimized()));
+        }
+
+        row = root.appendElement("tr");
+
+        for (IStrategy strategy : strategies) {
+
+            Element cursor = row.appendElement("td");
+            cursor.appendElement("h1").text("Rating");
+            Element table = cursor.appendElement("table");
+            Element trHeader = table.appendElement("tr");
+            Rater rater = new Rater(strategy.getOptimized());
+            List<Player> list = new ArrayList<>(rater.map.keySet());
+            for (Player player : list) {
+                trHeader.appendElement("th").text(player.name);
+            }
+            Element trSlot = table.appendElement("tr");
+            for (Player player : list) {
+                Rating rating = rater.map.get(player);
+                trSlot.appendElement("td").text(String.valueOf(rating.slot));
+            }
+            Element trSub = table.appendElement("tr");
+            for (Player player : list) {
+                Rating rating = rater.map.get(player);
+                trSub.appendElement("td").addClass("substitute").text("(" + rating.substitute + ")");
+            }
+            Element trRating = table.appendElement("tr");
+            for (Player player : list) {
+                Rating rating = rater.map.get(player);
+                trRating.appendElement("td").text(rating.getRating() + "%");
+            }
         }
 
         Path path = Paths.get("files/out/planning.html");
@@ -74,7 +113,7 @@ public class PlanningWriter {
 
     }
 
-    String createHtml(List<Session> weeks) {
+    public String createHtml(List<Session> weeks) {
         // Use jsoup to build the table
         Document doc = Jsoup.parse("<table></table>");
         Element table = doc.selectFirst("table");
@@ -100,6 +139,5 @@ public class PlanningWriter {
         }
         return table.outerHtml();
     }
-
 
 }
