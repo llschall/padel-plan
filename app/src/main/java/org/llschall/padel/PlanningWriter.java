@@ -25,44 +25,64 @@ public class PlanningWriter {
 
         System.out.println("Writing the planning...");
 
+        // Use utf8-encoding to ensure special characters are handled correctly
+        // Create a new HTML document with a head and body
+
         Document document = Jsoup.parse("<html><head></head><body></body></html>", "", Parser.xmlParser());
         Element head = document.head();
+
+        // use utf8 encoding
+        head.appendElement("meta").attr("charset", "utf-8");
         head.appendElement("title").text("Planning");
         head.appendElement("link").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "planning.css");
         Element body = document.body();
 
         Element root = body.appendElement("table").attr("border", "1");
 
-        Element topRow = root.appendElement("tr")
+        Element row = root.appendElement("tr")
                 .appendElement("td")
                 .attr("align", "right")
                 .attr("colspan", Integer.toString(strategies.length));
 
-        Element strategyRow = root.appendElement("tr");
-        Element planningRow = root.appendElement("tr");
-        Element ratingRow = root.appendElement("tr");
-
-        topRow.appendElement("h1").text("Poll ranking");
+        row.appendElement("h1").text("Poll ranking");
         String html = createHtml(sessions);
-        topRow.append(html);
+        row.append(html);
+
+        row = root.appendElement("tr");
+
+        for (IStrategy strategy : strategies) {
+            row.appendElement("td").append("&darr;  &darr;  &darr;");
+        }
+
+        row = root.appendElement("tr");
 
         for (IStrategy strategy : strategies) {
 
-            Element cursor = strategyRow.appendElement("td");
+            Element cursor = row.appendElement("td");
             cursor.appendElement("h1").text(strategy.getName());
             cursor.append(strategy.getDetails());
         }
 
+        row = root.appendElement("tr");
+
+        for (IStrategy strategy : strategies) {
+            row.appendElement("td").append("&darr;  &darr;  &darr;");
+        }
+
+        row = root.appendElement("tr");
+
         for (IStrategy strategy : strategies) {
 
-            Element cursor = planningRow.appendElement("td");
+            Element cursor = row.appendElement("td");
             cursor.appendElement("h1").text("Planning");
             cursor.append(createHtml(strategy.getOptimized()));
         }
 
+        row = root.appendElement("tr");
+
         for (IStrategy strategy : strategies) {
 
-            Element cursor = ratingRow.appendElement("td");
+            Element cursor = row.appendElement("td");
             cursor.appendElement("h1").text("Rating");
             Element table = cursor.appendElement("table");
             Element trHeader = table.appendElement("tr");
