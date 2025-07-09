@@ -11,6 +11,6 @@ public class Session {
         this.name = name;
     }
 
-    final List<Slot> slots = new ArrayList<>();
+    public final List<Slot> slots = new ArrayList<>();
 
 }

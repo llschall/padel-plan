@@ -15,7 +15,14 @@ import java.util.List;
 
 public class PlanningWriter {
 
-    void write(List<Session> weeks, IStrategy... strategies) throws IOException {
+    void write(List<Session> sessions, IStrategy... strategies) throws IOException {
+
+        for (IStrategy strategy : strategies) {
+            // clone the sessions to avoid modifying the original list
+            List<Session> clone = new ArrayList<>(sessions);
+            strategy.process(clone);
+        }
+
         System.out.println("Writing the planning...");
 
         Document document = Jsoup.parse("<html><head></head><body></body></html>", "", Parser.xmlParser());
@@ -36,11 +43,11 @@ public class PlanningWriter {
         Element ratingRow = root.appendElement("tr");
 
         topRow.appendElement("h1").text("Poll ranking");
-        String html = createHtml(weeks);
+        String html = createHtml(sessions);
         topRow.append(html);
 
         for (IStrategy strategy : strategies) {
-            
+
             Element cursor = strategyRow.appendElement("td");
             cursor.appendElement("h1").text(strategy.getName());
             cursor.appendElement(strategy.getDetails());

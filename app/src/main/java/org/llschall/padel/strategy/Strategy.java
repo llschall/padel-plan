@@ -11,19 +11,13 @@ import java.util.List;
 
 public class Strategy implements IStrategy {
 
-    private String name;
-
     private String details;
 
     private List<Session> optimized;
-
-    public Strategy(String name) {
-        this.name = name;
-    }
-
+    
     @Override
     public String getName() {
-        return name;
+        return "Balanced Strategy";
     }
 
     @Override
