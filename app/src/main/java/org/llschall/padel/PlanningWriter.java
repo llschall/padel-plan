@@ -50,7 +50,7 @@ public class PlanningWriter {
 
             Element cursor = strategyRow.appendElement("td");
             cursor.appendElement("h1").text(strategy.getName());
-            cursor.appendElement(strategy.getDetails());
+            cursor.append(strategy.getDetails());
         }
 
         for (IStrategy strategy : strategies) {
