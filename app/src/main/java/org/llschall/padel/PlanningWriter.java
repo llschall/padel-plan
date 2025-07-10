@@ -50,9 +50,7 @@ public class PlanningWriter {
 
         row = root.appendElement("tr");
 
-        for (IStrategy strategy : strategies) {
-            row.appendElement("td").append("&darr;  &darr;  &darr;");
-        }
+        insertArrows(row, strategies.length);
 
         row = root.appendElement("tr");
 
@@ -65,9 +63,7 @@ public class PlanningWriter {
 
         row = root.appendElement("tr");
 
-        for (IStrategy strategy : strategies) {
-            row.appendElement("td").append("&darr;  &darr;  &darr;");
-        }
+        insertArrows(row, strategies.length);
 
         row = root.appendElement("tr");
 
@@ -111,6 +107,16 @@ public class PlanningWriter {
         Path path = Paths.get("files/out/planning.html");
         Files.write(path, document.html().getBytes());
 
+    }
+
+    void insertArrows(Element cursor, int count) {
+        for (int i = 0; i < count; i++) {
+            cursor.appendElement("td")
+                    .appendElement("img")
+                    .attr("src", "arrow-down.svg")
+                    .attr("alt", "A")
+                    .attr("style", "width:128px;height:32px;display:block;margin:auto;");
+        }
     }
 
     public String createHtml(List<Session> weeks) {
