@@ -7,13 +7,13 @@ import java.util.List;
 
 public class OptimizerTest {
 
-    Player playerA = new Player("A");
-    Player playerB = new Player("B");
-    Player playerC = new Player("C");
-    Player playerD = new Player("D");
-    Player playerE = new Player("E");
-    Player playerF = new Player("F");
-    Player playerG = new Player("G");
+    final Player playerA = new Player("A");
+    final Player playerB = new Player("B");
+    final Player playerC = new Player("C");
+    final Player playerD = new Player("D");
+    final Player playerE = new Player("E");
+    final Player playerF = new Player("F");
+    final Player playerG = new Player("G");
 
     @Test
     void testOptimize() {

@@ -7,8 +7,6 @@ import java.util.Iterator;
 
 public class WordIterator implements Iterator<Word> {
 
-    private boolean first = true;
-
     private Word word;
 
     public WordIterator(Word word) {

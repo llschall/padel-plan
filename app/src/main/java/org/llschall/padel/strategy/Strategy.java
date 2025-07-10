@@ -6,6 +6,8 @@ import org.llschall.padel.Planning;
 import org.llschall.padel.PlanningWriter;
 
 import java.io.StringWriter;
+import java.util.Comparator;
+import java.util.Map;
 
 public class Strategy implements IStrategy {
 
@@ -38,8 +40,12 @@ public class Strategy implements IStrategy {
         writer.append("Counts: ");
 
         balancer.map.entrySet().stream()
-                .sorted((e1, e2) -> Integer.compare(e1.getValue(), e2.getValue()))
-                .forEach(entry -> writer.append(entry.getKey() + ":" + entry.getValue() + "; "));
+                .sorted(Comparator.comparingInt(Map.Entry::getValue))
+                .forEach(entry ->
+                        writer.append(entry.getKey())
+                                .append(":")
+                                .append(String.valueOf(entry.getValue()))
+                                .append("; "));
 
         writer.append("</i></p>");
 

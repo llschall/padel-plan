@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public class Combinator {
 
-    List<Sequence> cursor = new ArrayList<>();
+    final List<Sequence> cursor = new ArrayList<>();
 
     long count = 0;
 

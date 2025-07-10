@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Planning implements Iterable<Session> {
 
-    List<Session> sessions;
+    final List<Session> sessions;
 
     public Planning(List<Session> sessions) {
         this.sessions = sessions;

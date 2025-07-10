@@ -1,7 +1,6 @@
 package org.llschall.padel;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -26,18 +25,15 @@ public class Balancer {
 
         for (Session week : weeks) {
 
-            Set<Wrapper> set = new TreeSet<>(new Comparator<Wrapper>() {
-                @Override
-                public int compare(Wrapper o1, Wrapper o2) {
-                    if (o1.name.equals(o2.name)) {
-                        return 0;
-                    }
-                    int delta = o1.count - o2.count;
-                    if (delta != 0) {
-                        return delta;
-                    }
-                    return o1.rank - o2.rank;
+            Set<Wrapper> set = new TreeSet<>((o1, o2) -> {
+                if (o1.name.equals(o2.name)) {
+                    return 0;
                 }
+                int delta = o1.count - o2.count;
+                if (delta != 0) {
+                    return delta;
+                }
+                return o1.rank - o2.rank;
             });
 
             for (int i = 0; i < week.slots.size(); i++) {
@@ -61,9 +57,9 @@ public class Balancer {
 }
 
 class Wrapper {
-    String name;
-    int rank;
-    int count;
+    final String name;
+    final int rank;
+    final int count;
 
     Wrapper(String name, int rank, int count) {
         this.name = name;

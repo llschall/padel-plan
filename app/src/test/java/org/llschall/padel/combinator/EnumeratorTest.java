@@ -75,7 +75,7 @@ public class EnumeratorTest {
 
 class TestConsumer implements Consumer<List<Sequence>> {
 
-    List<Sequence> expected;
+    final List<Sequence> expected;
     boolean found = false;
 
     public TestConsumer(List<Sequence> expected) {
