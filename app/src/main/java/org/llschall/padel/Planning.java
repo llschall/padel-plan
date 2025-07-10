@@ -1,5 +1,6 @@
 package org.llschall.padel;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,7 +17,12 @@ public class Planning implements Iterable<Session> {
         return sessions.iterator();
     }
 
-    protected Planning copy() {
-        return new Planning(sessions);
+    Planning copy() {
+
+        ArrayList<Session> list = new ArrayList<>();
+        for (Session session : sessions) {
+            list.add(session.copy());
+        }
+        return new Planning(list);
     }
 }

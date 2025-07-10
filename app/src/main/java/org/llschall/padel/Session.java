@@ -13,4 +13,11 @@ public class Session {
 
     public final List<Slot> slots = new ArrayList<>();
 
+    public Session copy() {
+        Session session = new Session(name);
+        for (Slot slot : slots) {
+            session.slots.add(slot.copy());
+        }
+        return session;
+    }
 }

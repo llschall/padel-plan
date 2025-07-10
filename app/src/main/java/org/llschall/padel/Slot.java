@@ -9,4 +9,9 @@ public class Slot {
         this.player = player;
         this.isSubstitute = isSubstitute;
     }
+
+    Slot copy() {
+        return new Slot(player, isSubstitute);
+    }
+
 }
