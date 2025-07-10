@@ -3,7 +3,6 @@ package org.llschall.padel;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
 import org.llschall.padel.strategy.IStrategy;
 
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class PlanningWriter {
         System.out.println("Writing the planning...");
 
         // Create a new HTML document with a head and body
-        Document document = Jsoup.parse("<html><head></head><body></body></html>", "", Parser.xmlParser());
+        Document document = new Document("");
         Element head = document.head();
 
         head.appendElement("title").text("Planning");
@@ -42,10 +41,9 @@ public class PlanningWriter {
 
         Element row = root.appendElement("tr")
                 .appendElement("td")
-                .attr("align", "right")
                 .attr("colspan", Integer.toString(strategies.length));
 
-        row.appendElement("h1").text("Poll ranking");
+        row.appendElement("h1").attr("style", "text-align:center;").text("Poll Ranking");
         String html = createHtml(sessions);
         row.append(html);
 
@@ -122,7 +120,7 @@ public class PlanningWriter {
 
     public String createHtml(Planning weeks) {
         // Use jsoup to build the table
-        Document doc = Jsoup.parse("<table></table>");
+        Document doc = Jsoup.parse("<table style=margin:auto;></table>");
         Element table = doc.selectFirst("table");
 
         Element trHeader = table.appendElement("tr");
