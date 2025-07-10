@@ -7,6 +7,7 @@ class Rater {
 
     final Planning sessions;
     final Map<Player, Rating> map = new HashMap<>();
+    final int score;
 
     Rater(Planning sessions) {
         this.sessions = sessions;
@@ -25,6 +26,13 @@ class Rater {
                 }
             }
         }
+
+        // minimal value of all ratings
+        score = map.values().stream()
+                .mapToInt(Rating::getRating)
+                .min()
+                .orElseThrow(() -> new PadelPlanException("No ratings found"));
+
     }
 }
 
@@ -39,7 +47,8 @@ class Rating {
 
     int getRating() {
         int total = getTotal();
-        if (total == 0) throw new PadelPlanException("Unexpected total rating of 0");
+        if (total == 0)
+            throw new PadelPlanException("Unexpected total rating of 0");
         return 100 * slot / total;
     }
 

@@ -77,11 +77,12 @@ public class PlanningWriter {
 
         for (IStrategy strategy : strategies) {
 
+            Rater rater = new Rater(strategy.getOptimized());
+
             Element cursor = row.appendElement("td");
-            cursor.appendElement("h1").text("Rating");
+            cursor.appendElement("h2").text("Rating: " + rater.score + "%");
             Element table = cursor.appendElement("table");
             Element trHeader = table.appendElement("tr");
-            Rater rater = new Rater(strategy.getOptimized());
             List<Player> list = new ArrayList<>(rater.map.keySet());
             for (Player player : list) {
                 trHeader.appendElement("th").text(player.name);
