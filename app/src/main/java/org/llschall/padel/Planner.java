@@ -12,10 +12,6 @@ public class Planner {
         System.out.println("Processing the planner...");
 
         List<Session> weeks = new SessionFileReader().readSessions();
-
-        Strategy balancedStrategy = new Strategy();
-        balancedStrategy.process(weeks);
-
         new PlanningWriter().write(weeks, new Legacy(), new Strategy());
     }
 

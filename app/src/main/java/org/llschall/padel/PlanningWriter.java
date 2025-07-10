@@ -25,19 +25,20 @@ public class PlanningWriter {
 
         System.out.println("Writing the planning...");
 
-        // Use utf8-encoding to ensure special characters are handled correctly
         // Create a new HTML document with a head and body
-
         Document document = Jsoup.parse("<html><head></head><body></body></html>", "", Parser.xmlParser());
         Element head = document.head();
 
-        // use utf8 encoding
-        head.appendElement("meta").attr("charset", "utf-8");
         head.appendElement("title").text("Planning");
-        head.appendElement("link").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "planning.css");
+        head.appendElement("link")
+                .attr("rel", "stylesheet")
+                .attr("type", "text/css")
+                .attr("href", "planning.css");
+
         Element body = document.body();
 
-        Element root = body.appendElement("table").attr("border", "1");
+        Element root = body.appendElement("table")
+                .attr("border", "1");
 
         Element row = root.appendElement("tr")
                 .appendElement("td")
