@@ -38,10 +38,12 @@ public class OptimizerTest {
 
         // Create an instance of Optimizer
         Optimizer optimizer = new Optimizer();
-        List<Session> optimized = optimizer.optimize(List.of(week1, week2));
+        Planning optimized = optimizer.optimize(new Planning(List.of(week1, week2)));
+        List<Session> sessions = optimized.sessions;
 
-        Assertions.assertEquals("ABCDEF", dumpWeek(optimized.get(0)));
-        Assertions.assertEquals("EFBDG", dumpWeek(optimized.get(1)));
+
+        Assertions.assertEquals("ABCDEF", dumpWeek(sessions.get(0)));
+        Assertions.assertEquals("EFBDG", dumpWeek(sessions.get(1)));
     }
 
     String dumpWeek(Session week) {

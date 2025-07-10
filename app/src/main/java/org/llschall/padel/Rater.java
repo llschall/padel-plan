@@ -1,15 +1,14 @@
 package org.llschall.padel;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 class Rater {
 
-    final List<Session> sessions;
+    final Planning sessions;
     final Map<Player, Rating> map = new HashMap<>();
 
-    Rater(List<Session> sessions) {
+    Rater(Planning sessions) {
         this.sessions = sessions;
 
         for (Session session : sessions) {

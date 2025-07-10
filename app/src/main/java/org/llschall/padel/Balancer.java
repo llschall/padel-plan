@@ -12,7 +12,7 @@ public class Balancer {
 
     public final Map<String, Integer> map = new java.util.HashMap<>();
 
-    public List<Session> balance(List<Session> weeks) {
+    public Planning balance(Planning weeks) {
 
         for (Session week : weeks) {
             for (Slot slot : week.slots) {
@@ -56,7 +56,7 @@ public class Balancer {
 
         }
 
-        return list;
+        return new Planning(list);
     }
 }
 

@@ -2,17 +2,16 @@ package org.llschall.padel.strategy;
 
 import org.llschall.padel.Balancer;
 import org.llschall.padel.Optimizer;
+import org.llschall.padel.Planning;
 import org.llschall.padel.PlanningWriter;
-import org.llschall.padel.Session;
 
 import java.io.StringWriter;
-import java.util.List;
 
 public class Strategy implements IStrategy {
 
     private String details;
 
-    private List<Session> optimized;
+    private Planning optimized;
 
     @Override
     public String getName() {
@@ -24,15 +23,15 @@ public class Strategy implements IStrategy {
         return details;
     }
 
-    public List<Session> getOptimized() {
+    public Planning getOptimized() {
         return optimized;
     }
 
     @Override
-    public void process(List<Session> sessions) {
+    public void process(Planning sessions) {
 
         Balancer balancer = new Balancer();
-        List<Session> balanced = balancer.balance(sessions);
+        Planning balanced = balancer.balance(sessions);
 
         StringWriter writer = new StringWriter();
         writer.append("<p><i>");

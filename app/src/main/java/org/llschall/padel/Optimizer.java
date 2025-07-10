@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Optimizer {
 
-    public List<Session> optimize(List<Session> weeks) {
+    public Planning optimize(Planning weeks) {
 
         ArrayList<Session> list = new ArrayList<>();
 
@@ -44,7 +44,7 @@ public class Optimizer {
                 week1.slots.add(newSlot);
             }
         }
-        return list;
+        return new Planning(list);
     }
 
 }

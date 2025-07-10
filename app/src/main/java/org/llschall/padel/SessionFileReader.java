@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class SessionFileReader {
 
-    List<Session> readSessions() throws IOException {
+    Planning readSessions() throws IOException {
 
         // Create a list to hold the weeks
         List<Session> list = new ArrayList<>();
@@ -26,7 +26,7 @@ public class SessionFileReader {
             list.add(session);
         });
 
-        return list;
+        return new Planning(list);
     }
 
     Session readSession(Path path) {

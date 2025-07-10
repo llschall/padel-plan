@@ -15,11 +15,11 @@ import java.util.List;
 
 public class PlanningWriter {
 
-    void write(List<Session> sessions, IStrategy... strategies) throws IOException {
+    void write(Planning sessions, IStrategy... strategies) throws IOException {
 
         for (IStrategy strategy : strategies) {
             // clone the sessions to avoid modifying the original list
-            List<Session> clone = new ArrayList<>(sessions);
+            Planning clone = sessions.copy();
             strategy.process(clone);
         }
 
@@ -120,7 +120,7 @@ public class PlanningWriter {
         }
     }
 
-    public String createHtml(List<Session> weeks) {
+    public String createHtml(Planning weeks) {
         // Use jsoup to build the table
         Document doc = Jsoup.parse("<table></table>");
         Element table = doc.selectFirst("table");

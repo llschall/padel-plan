@@ -1,15 +1,13 @@
 package org.llschall.padel.strategy;
 
-import org.llschall.padel.Session;
-
-import java.util.List;
+import org.llschall.padel.Planning;
 
 public interface IStrategy {
     String getName();
 
     String getDetails();
 
-    void process(List<Session> sessions);
+    void process(Planning sessions);
 
-    List<Session> getOptimized();
+    Planning getOptimized();
 }

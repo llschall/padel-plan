@@ -1,12 +1,11 @@
 package org.llschall.padel.strategy;
 
+import org.llschall.padel.Planning;
 import org.llschall.padel.Session;
-
-import java.util.List;
 
 public class Legacy implements IStrategy {
 
-    private List<Session> optimized;
+    private Planning optimized;
 
     @Override
     public String getName() {
@@ -19,20 +18,18 @@ public class Legacy implements IStrategy {
     }
 
     @Override
-    public void process(List<Session> sessions) {
+    public void process(Planning sessions) {
 
         for (Session session : sessions) {
             for (int i = 0; i < session.slots.size(); i++) {
                 session.slots.get(i).isSubstitute = i > 3;
             }
         }
-
-
         optimized = sessions;
     }
 
     @Override
-    public List<Session> getOptimized() {
+    public Planning getOptimized() {
         // Return the sessions as they are, since this is a legacy strategy
         return optimized;
     }
