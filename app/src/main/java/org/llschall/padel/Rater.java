@@ -3,13 +3,13 @@ package org.llschall.padel;
 import java.util.HashMap;
 import java.util.Map;
 
-class Rater {
+public class Rater {
 
+    public final int score;
     final Planning sessions;
     final Map<Player, Rating> map = new HashMap<>();
-    final int score;
 
-    Rater(Planning sessions) {
+    public Rater(Planning sessions) {
         this.sessions = sessions;
 
         for (Session session : sessions) {

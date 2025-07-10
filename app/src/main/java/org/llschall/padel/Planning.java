@@ -17,7 +17,7 @@ public class Planning implements Iterable<Session> {
         return sessions.iterator();
     }
 
-    Planning copy() {
+    public Planning copy() {
 
         ArrayList<Session> list = new ArrayList<>();
         for (Session session : sessions) {
