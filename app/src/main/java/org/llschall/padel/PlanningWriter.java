@@ -113,7 +113,7 @@ public class PlanningWriter {
         for (int i = 0; i < count; i++) {
             cursor.appendElement("td")
                     .appendElement("img")
-                    .attr("src", "arrow-down.svg")
+                    .attr("src", "arrow.svg")
                     .attr("alt", "A")
                     .attr("style", "width:128px;height:32px;display:block;margin:auto;");
         }
