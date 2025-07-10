@@ -3,7 +3,7 @@ package org.llschall.padel.strategy;
 import org.llschall.padel.Planning;
 import org.llschall.padel.Session;
 
-public class Legacy implements IStrategy {
+public class LegacyStrategy implements IStrategy {
 
     private Planning optimized;
 

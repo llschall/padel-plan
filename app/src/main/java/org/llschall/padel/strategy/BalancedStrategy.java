@@ -9,7 +9,7 @@ import java.io.StringWriter;
 import java.util.Comparator;
 import java.util.Map;
 
-public class Strategy implements IStrategy {
+public class BalancedStrategy implements IStrategy {
 
     private String details;
 
