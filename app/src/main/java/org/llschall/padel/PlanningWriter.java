@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PlanningWriter {
 
@@ -84,6 +85,8 @@ public class PlanningWriter {
             Element table = cursor.appendElement("table");
             Element trHeader = table.appendElement("tr");
             List<Player> list = new ArrayList<>(rater.map.keySet());
+            Integer min = rater.map.values().stream().map(Rating::getRating).min(Integer::compareTo).get();
+
             for (Player player : list) {
                 trHeader.appendElement("th").text(player.name);
             }
@@ -100,7 +103,10 @@ public class PlanningWriter {
             Element trRating = table.appendElement("tr");
             for (Player player : list) {
                 Rating rating = rater.map.get(player);
-                trRating.appendElement("td").text(rating.getRating() + "%");
+                boolean isMin = rating.getRating() == min;
+                Element td = trRating.appendElement("td");
+                if(isMin)  td = td.appendElement("b").appendElement("u");
+                td.text(rating.getRating() + "%");
             }
         }
 
