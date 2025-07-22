@@ -58,7 +58,7 @@ public class PlanningWriter {
 
             Element cursor = row.appendElement("td");
             cursor.appendElement("h1").text(strategy.getName());
-            cursor.append(strategy.getDetails());
+            cursor.appendElement("small").append(strategy.getDetails());
         }
 
         row = root.appendElement("tr");
@@ -82,6 +82,7 @@ public class PlanningWriter {
 
             Element cursor = row.appendElement("td");
             cursor.appendElement("h2").text("Rating: " + rater.score + "%");
+            cursor.appendElement("small").text("The overall strategy rating is the rating of the player(s) with the lowest rating.");
             Element table = cursor.appendElement("table");
             Element trHeader = table.appendElement("tr");
             List<Player> list = new ArrayList<>(rater.map.keySet())
