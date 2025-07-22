@@ -14,7 +14,7 @@ public class LegacyStrategy implements IStrategy {
 
     @Override
     public String getDetails() {
-        return "This strategy gives the priorities to the fastest subscribers.";
+        return "This strategy gives the highest priority to the fastest subscribers.";
     }
 
     @Override
