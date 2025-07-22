@@ -21,8 +21,11 @@ public class LegacyStrategy implements IStrategy {
     public void process(Planning sessions) {
 
         for (Session session : sessions) {
-            for (int i = 0; i < session.slots.size(); i++) {
-                session.slots.get(i).isSubstitute = i > 3;
+            int size = session.slots.size();
+            int count = 4*(size/4);
+
+            for (int i = 0; i < size; i++) {
+                session.slots.get(i).isSubstitute = i >= count;
             }
         }
         optimized = sessions;
