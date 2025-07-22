@@ -47,7 +47,7 @@ public class SessionFileReader {
         Session session = new Session(name);
 
 
-        for (String line : lines) {
+        for (String line : lines.reversed()) {
             Player player = new Player(line);
             session.slots.add(new Slot(player, false));
         }
