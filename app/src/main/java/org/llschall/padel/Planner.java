@@ -14,8 +14,8 @@ public class Planner {
         Planning weeks = new SessionFileReader().readSessions();
         new PlanningWriter().write(weeks,
                 new LegacyStrategy(),
-                new BalancedStrategy(),
-                new RandomStrategy()
+                new RandomStrategy(),
+                new BalancedStrategy()
         );
     }
 

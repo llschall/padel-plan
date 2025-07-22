@@ -85,7 +85,7 @@ public class PlanningWriter {
             Element table = cursor.appendElement("table");
             Element trHeader = table.appendElement("tr");
             List<Player> list = new ArrayList<>(rater.map.keySet());
-            Integer min = rater.map.values().stream().map(Rating::getRating).min(Integer::compareTo).get();
+            int min = rater.map.values().stream().map(Rating::getRating).min(Integer::compareTo).get();
 
             for (Player player : list) {
                 trHeader.appendElement("th").text(player.name);
