@@ -18,7 +18,7 @@ public class RandomStrategy implements IStrategy {
 
     @Override
     public String getDetails() {
-        return "This strategy randomly assigns players to sessions.";
+        return "This strategy tries thousands of random combinations and keeps one of the best rated ones.";
     }
 
     @Override

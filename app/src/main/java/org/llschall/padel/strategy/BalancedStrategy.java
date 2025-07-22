@@ -36,6 +36,7 @@ public class BalancedStrategy implements IStrategy {
         Planning balanced = balancer.balance(sessions);
 
         StringWriter writer = new StringWriter();
+        writer.append("<b>Work in Progress</b>");
         writer.append("<p><i>");
         writer.append("Counts: ");
 
