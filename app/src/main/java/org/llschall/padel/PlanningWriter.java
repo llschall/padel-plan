@@ -84,7 +84,10 @@ public class PlanningWriter {
             cursor.appendElement("h2").text("Rating: " + rater.score + "%");
             Element table = cursor.appendElement("table");
             Element trHeader = table.appendElement("tr");
-            List<Player> list = new ArrayList<>(rater.map.keySet());
+            List<Player> list = new ArrayList<>(rater.map.keySet())
+                    .stream()
+                    .sorted((a,b) -> (a.name.compareTo(b.name)))
+                    .toList();
             int min = rater.map.values().stream().map(Rating::getRating).min(Integer::compareTo).get();
 
             for (Player player : list) {
@@ -112,7 +115,6 @@ public class PlanningWriter {
 
         Path path = Paths.get("files/out/planning.html");
         Files.write(path, document.html().getBytes());
-
     }
 
     void insertArrows(Element cursor, int count) {
