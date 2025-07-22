@@ -30,9 +30,6 @@ public class SessionFileReader {
     }
 
     Session readSession(Path path) {
-        // Create a new Week object
-        Session session = new Session(path.getFileName().toString());
-
         // Here you would read the file and populate the session object
         // For now, we will just return an empty session
         System.out.println("Reading session from: " + path);
@@ -44,6 +41,11 @@ public class SessionFileReader {
         } catch (IOException e) {
             throw new PadelPlanException(e);
         }
+
+        String name = lines.removeFirst();
+        // Create a new Week object
+        Session session = new Session(name);
+
 
         for (String line : lines) {
             Player player = new Player(line);
