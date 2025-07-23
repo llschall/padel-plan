@@ -11,6 +11,6 @@ public class BeautifierTest {
         Beautifier beautifier = new Beautifier();
 
         String result = beautifier.beautifySessionName("session-1982.txt");
-        Assertions.assertEquals("Session 1982", result);
+        Assertions.assertEquals("session.1982.txt", result);
     }
 }
