@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class PlanningWriter {
 
@@ -84,32 +83,25 @@ public class PlanningWriter {
             cursor.appendElement("h2").text("Rating: " + rater.score + "%");
             cursor.appendElement("small").text("The overall strategy rating is the rating of the player(s) with the lowest rating.");
             Element table = cursor.appendElement("table");
-            Element trHeader = table.appendElement("tr");
+
             List<Player> list = new ArrayList<>(rater.map.keySet())
                     .stream()
-                    .sorted((a,b) -> (a.name.compareTo(b.name)))
+                    .sorted((a, b) -> (a.name.compareTo(b.name)))
                     .toList();
             int min = rater.map.values().stream().map(Rating::getRating).min(Integer::compareTo).get();
 
             for (Player player : list) {
-                trHeader.appendElement("th").text(player.name);
-            }
-            Element trSlot = table.appendElement("tr");
-            for (Player player : list) {
+                Element tr = table.appendElement("tr");
+                tr.appendElement("th").text(player.name);
+
                 Rating rating = rater.map.get(player);
-                trSlot.appendElement("td").text(String.valueOf(rating.slot));
-            }
-            Element trSub = table.appendElement("tr");
-            for (Player player : list) {
-                Rating rating = rater.map.get(player);
-                trSub.appendElement("td").addClass("substitute").text("(" + rating.substitute + ")");
-            }
-            Element trRating = table.appendElement("tr");
-            for (Player player : list) {
-                Rating rating = rater.map.get(player);
+                tr.appendElement("td").text(String.valueOf(rating.slot));
+
+                tr.appendElement("td").addClass("substitute").text("(" + rating.substitute + ")");
+
                 boolean isMin = rating.getRating() == min;
-                Element td = trRating.appendElement("td");
-                if(isMin)  td = td.appendElement("b").appendElement("u");
+                Element td = tr.appendElement("td");
+                if (isMin) td = td.appendElement("b").appendElement("u");
                 td.text(rating.getRating() + "%");
             }
         }
