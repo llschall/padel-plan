@@ -22,8 +22,6 @@ public class PlanningWriter {
             strategy.process(clone);
         }
 
-        System.out.println("Writing the planning...");
-
         // Create a new HTML document with a head and body
         Document document = new Document("");
         Element head = document.head();
@@ -108,12 +106,17 @@ public class PlanningWriter {
                         .attr("style", "text-align:right;");
                 if (isMin) td = td.appendElement("b").appendElement("u");
                 td.text(rating.getRating() + "%");
-
-                ;
             }
         }
 
+        body.appendElement("img")
+                .attr("width", "128px")
+                .attr("src", "img.png")
+                .attr("alt", "Padel Planning")
+                .attr("style", "display:block;margin:auto;");
+
         Path path = Paths.get("files/out/planning.html");
+
         Files.write(path, document.html().getBytes());
     }
 
