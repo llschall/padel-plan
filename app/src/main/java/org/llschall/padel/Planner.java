@@ -1,6 +1,5 @@
 package org.llschall.padel;
 
-import org.llschall.padel.strategy.BalancedStrategy;
 import org.llschall.padel.strategy.LegacyStrategy;
 import org.llschall.padel.strategy.RandomStrategy;
 
@@ -14,8 +13,7 @@ public class Planner {
         Planning weeks = new SessionFileReader().readSessions();
         new PlanningWriter().write(weeks,
                 new LegacyStrategy(),
-                new RandomStrategy(),
-                new BalancedStrategy()
+                new RandomStrategy()
         );
     }
 
