@@ -92,17 +92,24 @@ public class PlanningWriter {
 
             for (Player player : list) {
                 Element tr = table.appendElement("tr");
-                tr.appendElement("th").text(player.name);
+                tr.appendElement("th").text(player.name)
+                        .attr("style", "text-align:left;");
 
                 Rating rating = rater.map.get(player);
-                tr.appendElement("td").text(String.valueOf(rating.slot));
+                tr.appendElement("td").text(String.valueOf(rating.slot))
+                        .attr("style", "text-align:right;");
 
-                tr.appendElement("td").addClass("substitute").text("(" + rating.substitute + ")");
+                tr.appendElement("td").addClass("substitute")
+                        .text("(" + rating.substitute + ")")
+                        .attr("style", "text-align:right;");
 
                 boolean isMin = rating.getRating() == min;
-                Element td = tr.appendElement("td");
+                Element td = tr.appendElement("td")
+                        .attr("style", "text-align:right;");
                 if (isMin) td = td.appendElement("b").appendElement("u");
                 td.text(rating.getRating() + "%");
+
+                ;
             }
         }
 
