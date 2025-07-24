@@ -3,4 +3,4 @@ Bob
 Diane
 Esther
 Felix
-George
+Georges
